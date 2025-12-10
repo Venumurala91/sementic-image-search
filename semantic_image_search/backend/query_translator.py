@@ -1,4 +1,5 @@
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 from semantic_image_search.backend.config import Config
 from semantic_image_search.backend.logger import GLOBAL_LOGGER as log
@@ -12,13 +13,24 @@ class QueryTranslator:
 
     def __init__(self):
         try:
-            log.info("Initializing QueryTranslator...", model=Config.OPENAI_MODEL)
+            log.info("Initializing QueryTranslator...")
 
-            self.llm = ChatOpenAI(
-                model=Config.OPENAI_MODEL,
-                temperature=0,
-                timeout=20,     # prevents API hangs
-            )
+            if Config.GOOGLE_API_KEY:
+                log.info("Using Google Generative AI", model="gemini-2.5-flash")
+                self.llm = ChatGoogleGenerativeAI(
+                    model="gemini-2.5-flash",
+                    temperature=0,
+                    timeout=20,  # prevents API hangs
+                    google_api_key=Config.GOOGLE_API_KEY
+                )
+            else:
+                log.info("Using OpenAI", model=Config.OPENAI_MODEL)
+                self.llm = ChatOpenAI(
+                    model=Config.OPENAI_MODEL,
+                    temperature=0,
+                    timeout=20,  # prevents API hangs
+                    openai_api_key=Config.OPENAI_API_KEY
+                )
 
             self.prompt_template = PromptTemplate(
                 input_variables=["input_query"],

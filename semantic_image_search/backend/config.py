@@ -70,13 +70,18 @@ class Config:
     VECTOR_SIZE: int = int(os.getenv("VECTOR_SIZE", 512))
     log.info("VECTOR_SIZE loaded", value=VECTOR_SIZE)
 
-    # ------------------- OPENAI -------------------
-    OPENAI_MODEL: str = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-    log.info("OPENAI_MODEL loaded", value=OPENAI_MODEL)
+    # # ------------------- OPENAI -------------------
+    # OPENAI_MODEL: str = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+    # log.info("OPENAI_MODEL loaded", value=OPENAI_MODEL)
 
-    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY")
-    if not OPENAI_API_KEY:
-        log.warning("OPENAI_API_KEY missing")
+    # OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY")
+    # if not OPENAI_API_KEY:
+    #     log.warning("OPENAI_API_KEY missing")
+
+    # ------------------- GOOGLE -------------------
+    GOOGLE_API_KEY: str = os.getenv("Google_API_Key")
+    if not GOOGLE_API_KEY:
+        log.warning("GOOGLE_API_KEY missing")
 
 
 # ------------------------------------------------------------
